@@ -7,12 +7,18 @@ import { appRoutes } from './app.routes';
 import { AppComponent } from './app.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { MapComponent } from './pages/map/map.component';
+import { DetailsComponent } from './pages/details/details.component';
+import { ResourcesComponent } from './pages/resources/resources.component';
+import { DemoComponent } from './pages/demo/demo.component';
 
 @NgModule({
       declarations: [
             AppComponent,
             DashboardComponent,
-            MapComponent
+            MapComponent,
+            DetailsComponent,
+            ResourcesComponent,
+            DemoComponent
       ],
       imports: [
             BrowserModule,
