@@ -1,4 +1,4 @@
 @import '../../app.component.color.scss';
 
 
-#mymap { height: 100%; }
+#mymap { height: calc(100% - 56px); }
