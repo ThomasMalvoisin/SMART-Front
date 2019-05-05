@@ -1,35 +1,29 @@
 <!-- <canvas id="myChart" style="max-width: 500px;"></canvas> -->
-<br/>
+<br />
 <div class="row no-gutters">
-<div class="col-6" style="text-align: center;">
-<h5>Affluence selon l'heure en personnes</h5>
-<form action="">
-  <div><label for="5h6h">De 05h à 06h :&nbsp;</label><input type="number" /> <label> &nbsp; personne(s). </label></div> 
-  <div><label for="6h7h">De 06h à 07h :&nbsp;</label><input type="number" /><label> &nbsp; personne(s). </label></div>
-  <div><label for="7h8h">De 07h à 08h :&nbsp;</label><input type="number" /><label> &nbsp; personne(s). </label></div>
-  <div><label for="8h9h">De 08h à 09h :&nbsp;</label><input type="number" /><label> &nbsp; personne(s). </label></div>
-  <div><label for="9h10h">De 09h à 10h :&nbsp;</label><input type="number" /><label> &nbsp; personne(s). </label></div>
-  <div><label for="10h11h">De 10h à 11h :&nbsp;</label><input type="number" /><label> &nbsp; personne(s). </label></div>
-  <div><label for="11h12h">De 11h à 12h :&nbsp;</label><input type="number" /><label> &nbsp; personne(s). </label></div>
-  <div><label for="12h13h">De 12h à 13h :&nbsp;</label><input type="number" /><label> &nbsp; personne(s). </label></div>
-  <div><label for="13h14h">De 13h à 14h :&nbsp;</label><input type="number" /><label> &nbsp; personne(s). </label></div>
-  <div><label for="14h15h">De 14h à 15h :&nbsp;</label><input type="number" /><label> &nbsp; personne(s). </label></div>
-  <div><label for="15h16h">De 15h à 16h :&nbsp;</label><input type="number" /><label> &nbsp; personne(s). </label></div>
-  <div><label for="16h17h">De 16h à 17h :&nbsp;</label><input type="number" /><label> &nbsp; personne(s). </label></div>
-  <div><label for="17h18h">De 17h à 18h :&nbsp;</label><input type="number" /><label> &nbsp; personne(s). </label></div>
-  <div><label for="18h19h">De 18h à 19h :&nbsp;</label><input type="number" /><label> &nbsp; personne(s). </label></div>
-  <div><label for="19h20h">De 19h à 20h :&nbsp;</label><input type="number" /><label> &nbsp; personne(s). </label></div>
-  <div><label for="20h21h">De 20h à 21h :&nbsp;</label><input type="number" /><label> &nbsp; personne(s). </label></div>
-  <div><label for="21h22h">De 21h à 22h :&nbsp;</label><input type="number" /><label> &nbsp; personne(s). </label></div>
-  <div><label for="22h23h">De 22h à 23h :&nbsp;</label><input type="number" /><label> &nbsp; personne(s). </label></div>
-  <div><label for="23h00h">De 23h à 00h :&nbsp;</label><input type="number" /><label> &nbsp; personne(s). </label></div>
+      <div class="offset-1 col-5" style="text-align: center;">
+            <h5>Affluence selon l'heure en personnes</h5>
+            <form action="">
+                  <div *ngFor="let hour of hours" class="form-group row">
+                        <label for="hour{{hour.beginH}}" class="col-4">
+                              De {{hour.beginH}}h à {{hour.endH}}h :&nbsp;
+                        </label>
+                        <input type="number" name="hour{{hour.beginH}}" [(ngModel)]="hour.nb"
+                              class="form-control col-6" />
+                  </div>
+            </form>
+      </div>
 
-</form>
-</div>
-
-<div class="col-6" style="text-align: left;">
-<h5>Affluence selon les stations en pourcentages</h5>
-<form action="" id="arretForm" #one>
-</form>
-</div>
+      <div class="col-5" style="text-align: center;">
+            <h5>Affluence selon les stations en pourcentages</h5>
+            <form action="">
+                  <div *ngFor="let busStop of busStopsPercents" class="form-group row">
+                        <label for="{{busStop.name}}" class="col-4">
+                              {{busStop.name}} :&nbsp;
+                        </label>
+                        <input type="number" name="{{busStop.name}}" [(ngModel)]="busStop.value"
+                              class="form-control col-6" />
+                  </div>
+            </form>
+      </div>
 </div>

@@ -1,55 +1,55 @@
-import { Component, OnInit, Inject, Renderer2, ViewChild, ElementRef } from '@angular/core';
-import { DOCUMENT } from '@angular/common';
+import { Component, OnInit} from '@angular/core';
 import { BusStopService } from 'src/app/services/bus-stop.service';
 
 @Component({
-  selector: 'app-demo',
-  templateUrl: './demo.component.html',
-  styleUrls: ['./demo.component.scss']
+      selector: 'app-demo',
+      templateUrl: './demo.component.html',
+      styleUrls: ['./demo.component.scss']
 })
 export class DemoComponent implements OnInit {
-  private busStops = {
-    bus_stops: []
-  };
-  @ViewChild('one') d1:ElementRef;
+      private busStops = {
+            bus_stops: []
+      };
 
-  constructor(  @Inject(DOCUMENT) private document: any,
-  private busStopService: BusStopService,
-  private renderer:Renderer2) { }
+      private hours;
+      private busStopsPercents;
 
-  ngOnInit() {
-    this.retrieveAllBusStops();
-    
-  }
+      constructor(
+            private busStopService: BusStopService
+      ) { }
 
-  addBusStopsToDetails() { // Cette fonction là ne marche pas, je comprends pas pourquoi même avec un truc tout simple
-    var i =1;
-    this.busStops.bus_stops.forEach(busStop => {
-      var busStopNum= "busStop" +i;
-      console.log(busStopNum);
-      var div = this.renderer.createElement('div');
-      var label = this.renderer.createElement('label');
-      this.renderer.setAttribute(label, 'for', busStop.name);
-      var text = this.renderer.createText(busStop.name + " : "+" \u00a0");
-      this.renderer.appendChild(label, text);
-      this.renderer.appendChild(div, label);
-      var input = this.renderer.createElement('input');
-      this.renderer.setAttribute(input, 'type' , 'number');
-      this.renderer.appendChild(div, input);
-      this.renderer.appendChild(this.d1.nativeElement, div);
-      i++;
-      });
-      
-  }
+      ngOnInit() {
+            this.retrieveAllBusStops();
+      }
 
-  retrieveAllBusStops() {
-    this.busStopService.retrieveAll().subscribe((res: any) => {
-          this.busStops = res;
-          console.log(this.busStops);
-          this.addBusStopsToDetails();
-    }, err => {
-          console.log(err);
-    });
-}
+      retrieveAllBusStops() {
+            this.busStopService.retrieveAll().subscribe((res: any) => {
+                  this.busStops = res;
+                  // console.log(this.busStops);
+                  // this.addBusStopsToDetails();
+                  this.createUtilsArrays();
+            }, err => {
+                  console.log(err);
+            });
+      }
+
+      createUtilsArrays() {
+            this.hours = Array.from(Array(24).keys()).map((hour) => {
+                  return {
+                        beginH: hour,
+                        endH: (hour + 1) % 24,
+                        nb: 0
+                  }
+            })
+
+            this.busStopsPercents = this.busStops.bus_stops.map((busStop => {
+                  return {
+                        name: busStop.name,
+                        id: busStop.id,
+                        busStopId: busStop.busStopId,
+                        value: 0
+                  }
+            }))
+      }
 
 }
