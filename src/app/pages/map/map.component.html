@@ -1,12 +1,20 @@
 <div class="row no-gutters hauteur">
       <div class="col-9" id="mymap"></div>
       <div class="col-3 mx-auto">
-            <h3 style="text-align:center;" class="mx-auto">Arrêt {{ busStopSelected?.name }} </h3>
-            <ul>
-                  <li>Latidude : {{busStopSelected?.latitude}} </li>
-                  <li>Longitude : {{busStopSelected?.longitude}} </li>
-                  <li>{{busStopSelected?.nbPersonsWaiting}} personne(s) attend(ent) à l'arrêt </li>
-                  <li>{{busStopSelected?.nbPersonsComing}} personne(s) arrive(nt) à l'arrêt </li>
-            </ul>
+          <div class="card" style="width: 18rem;" style="align-content: center;">
+              <div class="card-body">
+                <h5 style="text-align:center;" class="card-title">Informations</h5>
+                <h3 style="text-align:center;" class="mx-auto">Arrêt {{ busStopSelected?.name }} </h3>
+                <p class="card-text">
+                    
+                    <li>Latidude : {{busStopSelected?.latitude}} </li>
+                    <li>Longitude : {{busStopSelected?.longitude}} </li>
+                    <li>{{busStopSelected?.nbPersonsWaiting}} personne(s) attend(ent) à l'arrêt </li>
+                    <li>{{busStopSelected?.nbPersonsComing}} personne(s) arrive(nt) à l'arrêt </li>
+                  
+                </p>
+                <a href="details"  class="btn btn-primary" >Plus d'informations</a>
+              </div>
+            </div>
       </div>
 </div>
