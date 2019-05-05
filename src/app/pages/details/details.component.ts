@@ -39,7 +39,7 @@ export class DetailsComponent implements OnInit {
       var titre = this.renderer.createElement('h5');
       this.renderer.setAttribute(titre, 'class','mb-0');
       var button = this.renderer.createElement('button');
-      this.renderer.setAttribute(button, 'class','btn btn-link');
+      this.renderer.setAttribute(button, 'class','btn');
       this.renderer.setAttribute(button, 'type','button');
       this.renderer.setAttribute(button, 'data-toggle',"collapse");
       this.renderer.setAttribute(button, 'data-target','#'+ColapseNum);
