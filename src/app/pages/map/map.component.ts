@@ -1,110 +1,89 @@
 import { Component, OnInit } from '@angular/core';
 import * as L from 'leaflet';
 import { BusStopService } from 'src/app/services/bus-stop.service';
+import { BusLineService } from 'src/app/services/bus-line.service';
 // import * as Gp from './../../../../node_modules/geoportal-access-lib/dist/GpServices.js';
 
 @Component({
-      
+
       selector: 'app-map',
       templateUrl: './map.component.html',
       styleUrls: ['./map.component.scss']
 })
 export class MapComponent implements OnInit {
+      //Map
+      private mymap;
 
+      //BusStops
       private busStops = {
             bus_stops: []
       };
-      //ArretActif
-      private nomArretActif: String;
-      latitudeActif: number;
-      longitudeActif: number;
-      personneALArret: number;
-      personneArrivant: number;
+      private busStopSelected;
 
-      busX: number[]; //Absicce des bus
-      busY: number[]; //Ordonnée des bus
-      personneBus: number[]; //nombre de personne dans le bus
-      circleBusStop: any[];
-      mymap: any;
-      private infoBusStop: any[];
-      busArret: any[];
-      
+      //BusLines
+      private busLines;
+      private busLineSelected;
+
       constructor(
-            private busStopService : BusStopService
-      ) {
-            
+            private busStopService: BusStopService,
+            private busLineService: BusLineService
+      ) { }
 
-
-            this.infoBusStop=new Array()
-            var i=0;
-            for(i;i<100;i++){
-            this.infoBusStop[i] = new Array();
-            }
-
-            this.busArret =new Array();
-
-            this.circleBusStop = new Array();
-             
-            
-            
-
-            this.busX = new Array();
-            this.busY = new Array();
-            this.busX = [45.779886];
-            this.busY = [4.882462];
-            this.personneBus = new Array();
-            this.personneBus = [11];
-
-      }
       ngOnInit() {
-            this.nomArretActif = '1';
-            this.latitudeActif = 1;
-            this.longitudeActif = 1;
-            this.personneALArret= 5;
-            this.personneArrivant= 1;
-            this.retrieveAllBusStops(); 
-            this.mymap = L.map('mymap').setView([45.769448, 4.861025], 15);           
-            L.tileLayer('https://api.tiles.mapbox.com/v4/mapbox.light/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
-                  attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            }).addTo(this.mymap);
-            
+            this.setupMap();
+            this.retrieveAllBusStops();
+            this.retrieveAllBusLines();
       }
 
-      retrieveAllBusStops()
-      {
-            this.busStopService.retrieveAll().subscribe( (res:any) => 
-            {
+      retrieveAllBusStops() {
+            this.busStopService.retrieveAll().subscribe((res: any) => {
                   this.busStops = res;
-                  var i =0
-                  this.busStops.bus_stops.forEach(busStop => 
-                  {
-                              this.circleBusStop[i] = L.circle([busStop.latitude, busStop.longitude] , {
-                                    color: 'red',
-                                    fillColor: '#f03',
-                                    fillOpacity: 0.2,
-                                    radius: busStop.nbPersonsWaiting+1
-                              }).addTo(this.mymap);
-                              this.circleBusStop[i].bindPopup(busStop.name);
-                              
-
-                              this.circleBusStop[i].on('click', this.onBusStopSelected.bind(this, busStop));
-                              
-                  })
-                  console.log(res);
-            }, err => 
-            {
+                  this.addBusStopsToMap();
+                  console.log(this.busStops);
+            }, err => {
                   console.log(err);
             });
       }
 
-      onBusStopSelected(busStop){
-            console.log(busStop);
-            this.nomArretActif= busStop.name;
-            this.latitudeActif= busStop.latitude;
-            this.longitudeActif= busStop.longitude;
-            this.personneALArret= busStop.nbPersonsWaiting;
-            this.personneArrivant= busStop.nbPersonsComing;
+      retrieveAllBusLines() {
+            this.busLines = this.busLineService.retrieveAll();
+            this.addBusLinesToMap();
       }
+
+      setupMap() {
+            this.mymap = L.map('mymap').setView([45.769448, 4.861025], 15);
+            L.tileLayer('https://api.tiles.mapbox.com/v4/mapbox.light/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
+                  attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(this.mymap);
+      }
+
+      addBusStopsToMap() {
+            this.busStops.bus_stops.forEach(busStop => {
+                  let circle = L.circle([busStop.latitude, busStop.longitude], {
+                        color: 'red',
+                        fillColor: '#f03',
+                        fillOpacity: 0.2,
+                        radius: busStop.nbPersonsWaiting + 1
+                  });
+
+                  circle.bindPopup(busStop.name);
+                  circle.on('click', this.onBusStopSelected.bind(this, busStop));
+                  circle.addTo(this.mymap);
+            });
+      }
+
+      addBusLinesToMap() {
+            
+      }
+
+      onBusStopSelected(busStop) {
+            this.busStopSelected = busStop;
+      }
+
+      onBusLineSelected() {
+
+      }
+
       getRandomInt(max) {
             return Math.floor(Math.random() * Math.floor(max));
       }
