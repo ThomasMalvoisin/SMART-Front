@@ -12,6 +12,7 @@ import { DetailsComponent } from './pages/details/details.component';
 import { ResourcesComponent } from './pages/resources/resources.component';
 import { DemoComponent } from './pages/demo/demo.component';
 
+import {FormsModule} from '@angular/Forms';
 @NgModule({
       declarations: [
             AppComponent,
@@ -24,7 +25,8 @@ import { DemoComponent } from './pages/demo/demo.component';
       imports: [
             BrowserModule,
             HttpClientModule,
-            appRoutes
+            appRoutes,
+            FormsModule
       ],
       providers: [],
       bootstrap: [AppComponent]
