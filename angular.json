@@ -30,17 +30,13 @@
               "src/styles.scss",
               "./node_modules/bootstrap/dist/css/bootstrap.min.css",
               "./node_modules/leaflet/dist/leaflet.css",
-              "./node_modules/geoportal-extensions-leaflet/dist/GpPluginLeaflet.css"
+              "./node_modules/mdbootstrap/scss/style.scss"
             ],
             "scripts": [
               "./node_modules/jquery/dist/jquery.min.js",
               "./node_modules/popper.js/dist/umd/popper.min.js",
               "./node_modules/bootstrap/dist/js/bootstrap.min.js",
-              "./node_modules/geoportal-access-lib/dist/GpServices.js",
-              "./node_modules/request/request.js",
-              "./node_modules/xmldom/dom.js",
-              "./node_modules/xmldom/dom-parser.js",
-              "./node_modules/xmldom/sax.js"
+              "./node_modules/mdbootstrap/js/bootstrap.min.js"
             ]
           },
           "configurations": {
