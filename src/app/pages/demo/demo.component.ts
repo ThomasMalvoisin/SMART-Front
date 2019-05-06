@@ -1,5 +1,6 @@
 import { Component, OnInit} from '@angular/core';
 import { BusStopService } from 'src/app/services/bus-stop.service';
+import { DemoService } from 'src/app/services/demo.service';
 
 @Component({
       selector: 'app-demo',
@@ -10,17 +11,22 @@ export class DemoComponent implements OnInit {
       private busStops = {
             bus_stops: []
       };
-
-      private hours;
+      
+      private nbRequete;
       private busStopsPercents;
+      
 
       constructor(
-            private busStopService: BusStopService
+            private busStopService: BusStopService,
+            private demoService: DemoService
       ) { }
 
       ngOnInit() {
             this.retrieveAllBusStops();
             this.createUtilsArrays();
+            var element = document.getElementById('buttonActualiser');
+
+            element.addEventListener('click', this.sendDemo.bind(this));
       }
 
       retrieveAllBusStops() {
@@ -28,14 +34,6 @@ export class DemoComponent implements OnInit {
       }
 
       createUtilsArrays() {
-            this.hours = Array.from(Array(24).keys()).map((hour) => {
-                  return {
-                        beginH: hour,
-                        endH: (hour + 1) % 24,
-                        nb: 0
-                  }
-            })
-
             this.busStopsPercents = this.busStops.bus_stops.map((busStop => {
                   return {
                         name: busStop.name,
@@ -45,5 +43,15 @@ export class DemoComponent implements OnInit {
                   }
             }))
       }
+
+      sendDemo(){
+            this.demoService.sendToBack(this.nbRequete, this.busStopsPercents);
+      }
+
+
+
+
+
+
 
 }

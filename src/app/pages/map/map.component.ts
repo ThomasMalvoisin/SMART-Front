@@ -20,6 +20,8 @@ export class MapComponent implements OnInit {
       };
       private busStopSelected;
 
+      private infoSelected: boolean;
+
       //BusLines
       private busLines;
       private busLineSelected;
@@ -30,6 +32,7 @@ export class MapComponent implements OnInit {
       ) { }
 
       ngOnInit() {
+            this.infoSelected=false;
             this.setupMap();
             this.retrieveAllBusStops();
             this.retrieveAllBusLines();
@@ -55,13 +58,13 @@ export class MapComponent implements OnInit {
       addBusStopsToMap() {
             this.busStops.bus_stops.forEach(busStop => {
                   let circle = L.circle([busStop.latitude, busStop.longitude], {
-                        color: 'red',
-                        fillColor: '#f03',
+                        color: 'purple',
+                        fillColor: '#8B008B',
                         fillOpacity: 0.2,
                         radius: busStop.nbPersonsWaiting + 1
                   });
 
-                  circle.bindPopup(busStop.name);
+                  // circle.bindPopup(busStop.name);
                   circle.on('click', this.onBusStopSelected.bind(this, busStop));
                   circle.addTo(this.mymap);
             });
@@ -72,6 +75,7 @@ export class MapComponent implements OnInit {
       }
 
       onBusStopSelected(busStop) {
+            this.infoSelected=true;
             this.busStopSelected = busStop;
       }
 

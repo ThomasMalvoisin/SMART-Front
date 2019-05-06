@@ -1,8 +1,8 @@
 <div class="row no-gutters hauteur">
       <div class="col-9" id="mymap"></div>
-      <div class="col-3 mx-auto">
-          <div class="card" style="width: 18rem;" style="align-content: center;">
-              <div class="card-body">
+      <div *ngIf="infoSelected" class="col-3 mx-auto h-100">
+          <div class="card h-100" style="width: 18rem;" style="align-content: center;">
+              <div class="card-body h-100">
                 <h5 style="text-align:center;" class="card-title">Informations</h5>
                 <h3 style="text-align:center;" class="mx-auto">Arrêt {{ busStopSelected?.name }} </h3>
                 <p class="card-text">
@@ -13,7 +13,7 @@
                     <li>{{busStopSelected?.nbPersonsComing}} personne(s) arrive(nt) à l'arrêt </li>
                   
                 </p>
-                <a href="details"  class="btn btn-primary" >Plus d'informations</a>
+                <a href="details" style="background-color: #8B008B" class="mx-auto btn btn-primary" >Plus d'informations</a>
               </div>
             </div>
       </div>

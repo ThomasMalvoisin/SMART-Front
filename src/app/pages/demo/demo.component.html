@@ -2,27 +2,32 @@
 <br />
 <div class="row no-gutters">
       <div class="offset-1 col-5" style="text-align: center;">
-            <h5>Affluence selon l'heure en personnes</h5>
+            <h5>Nombre de rêquete par heure</h5>
+            <br />
             <form action="">
-                  <div *ngFor="let hour of hours" class="form-group row">
-                        <label for="hour{{hour.beginH}}" class="col-4">
-                              De {{hour.beginH}}h à {{hour.endH}}h :&nbsp;
+                  <div class="form-group row">
+                        <label for="nombreRequete" class="col-5">
+                              Nombre de requêtes :&nbsp;
                         </label>
-                        <input type="number" name="hour{{hour.beginH}}" [(ngModel)]="hour.nb"
-                              class="form-control col-6" />
+                        <input type="number" name="requete" [(ngModel)]="nbRequete"
+                              class="form-control col-5" />
                   </div>
             </form>
+            <button id="buttonActualiser" style="background-color: #8B008B" class="col-6 mx-auto btn btn-primary btn-lg btn-block">Actualiser la Simulation</button>
+
+            
       </div>
 
       <div class="col-5" style="text-align: center;">
-            <h5>Affluence selon les stations en pourcentages</h5>
+            <h5>Fréquence de départ et d'arrivé des stations</h5>
+            <br />
             <form action="">
                   <div *ngFor="let busStop of busStopsPercents" class="form-group row">
                         <label for="{{busStop.name}}" class="col-4">
                               {{busStop.name}} :&nbsp;
                         </label>
                         <input type="number" name="{{busStop.name}}" [(ngModel)]="busStop.value"
-                              class="form-control col-6" />
+                              class="form-control col-6" value='0' />
                   </div>
             </form>
       </div>
