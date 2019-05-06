@@ -20,17 +20,11 @@ export class DemoComponent implements OnInit {
 
       ngOnInit() {
             this.retrieveAllBusStops();
+            this.createUtilsArrays();
       }
 
       retrieveAllBusStops() {
-            this.busStopService.retrieveAll().subscribe((res: any) => {
-                  this.busStops = res;
-                  // console.log(this.busStops);
-                  // this.addBusStopsToDetails();
-                  this.createUtilsArrays();
-            }, err => {
-                  console.log(err);
-            });
+            this.busStops=this.busStopService.retrieveAll();
       }
 
       createUtilsArrays() {

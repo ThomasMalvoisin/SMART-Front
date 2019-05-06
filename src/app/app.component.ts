@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { BusStopService } from 'src/app/services/bus-stop.service';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,10 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'SMART-Front';
+
+  constructor(private busStopService: BusStopService) { }
+
+  ngOnInit() {
+    this.busStopService.initBuStop();
+  }
 }

@@ -1,6 +1,27 @@
 <br/>
 <div class="col-12" style="align-items: center;">
-<div class="accordion" id="accordionExample" #one>
+<div class="accordion" id="Detail">
+    <div *ngFor="let busStop of busStops.bus_stops; let i = index">
+        <div class="card">
+            <div class="card-header">
+              <h5 class="mb-0">
+                <a class="btn" data-toggle="collapse" href="#collapse{{i}}" role="button" aria-expanded="false">
+                    {{ busStop.name }}
+                </a>
+              </h5>
+            </div>
+        
+            <div id="collapse{{i}}" class="collapse" aria-labelledby="headingOne" data-parent="#Detail">
+              <div class="card-body">
+                  <p> Il y a actuellement {{busStop.nbPersonsWaiting}} personne(s) qui attend(ent) à cet arrêt. </p>
+                  <p> Prochainement, {{busStop.nbPersonsComing}} personne(s) arrive(nt) à cet arrêt. </p>
+                  <p> L'arrêt est localisé à {{busStop.latitude}} Nord et {{busStop.longitude}} Est. </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
 </div>
 </div>
 

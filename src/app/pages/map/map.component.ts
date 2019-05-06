@@ -36,13 +36,8 @@ export class MapComponent implements OnInit {
       }
 
       retrieveAllBusStops() {
-            this.busStopService.retrieveAll().subscribe((res: any) => {
-                  this.busStops = res;
-                  this.addBusStopsToMap();
-                  console.log(this.busStops);
-            }, err => {
-                  console.log(err);
-            });
+            this.busStops=this.busStopService.retrieveAll();
+            this.addBusStopsToMap();
       }
 
       retrieveAllBusLines() {
