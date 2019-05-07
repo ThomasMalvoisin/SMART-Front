@@ -11,22 +11,28 @@ export class BusLineService {
 
       retrieveAll() {
 
-            return {
-                  coords: [
-                        {
-                              longitude: 45.77087,
-                              latitude: 4.863733
-                        },
-                        {
-                              longitude: 45.770932,
-                              latitude: 4.86383
-                        },
-                        {
-                              longitude: 45.771007,
-                              latitude: 4.863958
-                        }
-                  ]
-            }
+            const options = {
+                  params: new HttpParams().set("action", "getBusLines")
+            };
+
+            return this.http.get(environment.backend + "/OptiBus_Back/ActionServlet", options);
+
+            // return {
+            //       coords: [
+            //             {
+            //                   longitude: 45.77087,
+            //                   latitude: 4.863733
+            //             },
+            //             {
+            //                   longitude: 45.770932,
+            //                   latitude: 4.86383
+            //             },
+            //             {
+            //                   longitude: 45.771007,
+            //                   latitude: 4.863958
+            //             }
+            //       ]
+            // }
 
       }
 
