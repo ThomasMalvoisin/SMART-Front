@@ -17,7 +17,7 @@ export class DetailsLignesComponent implements OnInit {
   }
 
   retrieveAllBusLines() {
-    this.busLines=this.busLineService.retrieveAll();
+//     this.busLines=this.busLineService.retrieveAll();
     console.log(this.busLines);
   }
 

@@ -13,25 +13,36 @@ export class DetailsComponent implements OnInit {
       private busStops = {
             bus_stops: []
       };
+
+      private recall = false;
       // @ViewChild('one') d1:ElementRef;
 
       constructor(
             private busStopService: BusStopService
-      ) {}
+      ) { }
 
       ngOnInit() {
-            this.retrieveAllBusStops();
+            setInterval(this.retrieveAllBusStops.bind(this), 5000);
       }
 
       retrieveAllBusStops() {
-            //     this.busStops=this.busStopService.retrieveAll();
-            // this.busStopService.onGetBusStops.subscribe(res => {
-            //       console.log("Suuuu 2 : ", res);
-            // })
-            this.busStopService.getData(function (res) {
+            this.busStopService.getData(this.recall, function (res) {
                   console.log(res);
-                  this.busStops = res;
-            });
+                  if (this.busStops.bus_stops.length) {
+                        this.busStops.bus_stops.forEach((busStop, index) => {
+                              if(busStop.busStopId == res.bus_stops[index].busStopId){
+                                    this.busStops.bus_stops[index].nbPersonsWaiting = res.bus_stops[index].nbPersonsWaiting
+                                    this.busStops.bus_stops[index].nbPersonsComing = res.bus_stops[index].nbPersonsComing
+                              }
+                        });
+                  } else {
+                        this.busStops = res;
+                  }
+
+            }.bind(this));
+            if (this.recall == false) {
+                  this.recall = true;
+            }
       }
 
 }

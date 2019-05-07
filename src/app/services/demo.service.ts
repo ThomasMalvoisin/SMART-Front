@@ -34,7 +34,7 @@ export class DemoService {
       });
 
       this.http.post(environment.backend + "/OptiBus_Back/ActionServlet", body);
-      console.log(body);
+      console.log(JSON.stringify(body));
 
     
   }

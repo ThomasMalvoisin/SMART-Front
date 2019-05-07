@@ -29,6 +29,7 @@ export class MapComponent implements OnInit {
             lines: []
       };
 
+      private recall = false;
 
       constructor(
             private busStopService: BusStopService,
@@ -40,24 +41,41 @@ export class MapComponent implements OnInit {
             this.infoLigneSelected = false;
             this.setupMap();
             this.retrieveAllBusStops();
-            this.retrieveAllBusLines();
+            // this.retrieveAllBusLines();
       }
 
       retrieveAllBusStops() {
-            // this.busStops = this.busStopService.retrieveAll();
-            // this.busStopService.onGetBusStops.subscribe((res) => {
-            //       console.log("Suuuuu : ", res);
-            // })
-            this.busStopService.getData(function (res) {
+            this.busStopService.getData(this.recall, function (res) {
                   console.log(res);
-                  this.busStops = res;
-                  this.addBusStopsToMap();
+                  if (this.busStops.bus_stops.length) {
+                        this.busStops.bus_stops.forEach((busStop, index) => {
+                              if (busStop.busStopId == res.bus_stops[index].busStopId) {
+                                    if (this.busStops.bus_stops[index].nbPersonsWaiting != res.bus_stops[index].nbPersonsWaiting){
+                                          this.busStops.bus_stops[index].nbPersonsWaiting = res.bus_stops[index].nbPersonsWaiting
+                                          //TODO update circle size
+                                    }
+                                          
+                                    if (this.busStops.bus_stops[index].nbPersonsComing != res.bus_stops[index].nbPersonsComing){
+                                          this.busStops.bus_stops[index].nbPersonsComing = res.bus_stops[index].nbPersonsComing
+                                          //TODO update circle size
+                                    }
+                                          
+                              }
+                        });
+                  } else {
+                        this.busStops = res;
+                        this.addBusStopsToMap();
+                  }
+
             }.bind(this));
+            if (this.recall == false) {
+                  this.recall = true;
+            }
       }
 
       retrieveAllBusLines() {
-            this.busLines= this.busLineService.retrieveAll();
-            
+            // this.busLines= this.busLineService.retrieveAll();
+
       }
 
       setupMap() {
@@ -80,9 +98,6 @@ export class MapComponent implements OnInit {
                   circle.on('click', this.onBusStopSelected.bind(this, busStop));
                   circle.addTo(this.mymap);
             });
-            //         var polyline = L.polyline(latlngs, {color: 'red'}).addTo(this.mymap);
-            // // zoom the map to the polyline
-            // this.mymap.fitBounds(polyline.getBounds());
       }
 
       addBusLinesToMap() {
@@ -119,12 +134,11 @@ export class MapComponent implements OnInit {
             })
       }
 
-      onBusSelected(line){
+      onBusSelected(line) {
             this.infoBusStopSelected = false;
             this.infoLigneSelected = true;
             this.ligneSelected = line;
             console.log(line);
-
       }
 
       onBusStopSelected(busStop) {

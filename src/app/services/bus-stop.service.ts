@@ -8,7 +8,6 @@ import { environment } from 'src/environments/environment';
 })
 export class BusStopService {
 
-
       onGetBusStops : EventEmitter<any> = new EventEmitter<any>();
 
       private busStops = {
@@ -37,13 +36,10 @@ export class BusStopService {
             return this.busStops;
       }
 
-      getData(callback){
-            console.log("suu");
-            if(this.busStops.bus_stops.length){
-                  console.log("ta mere");
+      getData(recall, callback){
+            if(!recall && this.busStops.bus_stops.length){
                   callback(this.busStops);
             } else {
-                  console.log("ta maman");
                   const options = {
                         params: new HttpParams().set("action", "getBusStops")
                   };
