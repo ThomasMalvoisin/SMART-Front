@@ -41,8 +41,15 @@ export class MapComponent implements OnInit {
       }
 
       retrieveAllBusStops() {
-            this.busStops = this.busStopService.retrieveAll();
-            this.addBusStopsToMap();
+            // this.busStops = this.busStopService.retrieveAll();
+            // this.busStopService.onGetBusStops.subscribe((res) => {
+            //       console.log("Suuuuu : ", res);
+            // })
+            this.busStopService.getData(function (res) {
+                  console.log(res);
+                  this.busStops = res;
+                  this.addBusStopsToMap();
+            }.bind(this));
       }
 
       retrieveAllBusLines() {
@@ -104,14 +111,14 @@ export class MapComponent implements OnInit {
                               })
 
                               ll.push([busStopLine.busStop.paths[0].busStopDestination.latitude, busStopLine.busStop.paths[0].busStopDestination.longitude])
-                        
+
                               latlng.push(ll);
                         }
                   })
 
                   console.log(latlng);
 
-                  var polyline = L.polyline(latlng, {color: 'red'}).addTo(this.mymap);
+                  var polyline = L.polyline(latlng, { color: 'red' }).addTo(this.mymap);
 
             })
       }

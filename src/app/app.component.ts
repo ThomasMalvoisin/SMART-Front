@@ -2,16 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { BusStopService } from 'src/app/services/bus-stop.service';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+      selector: 'app-root',
+      templateUrl: './app.component.html',
+      styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'SMART-Front';
+      title = 'SMART-Front';
 
-  constructor(private busStopService: BusStopService) { }
+      constructor(private busStopService: BusStopService) { }
 
-  ngOnInit() {
-    this.busStopService.initBuStop();
-  }
+      ngOnInit() {
+      }
 }
