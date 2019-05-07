@@ -19,14 +19,16 @@ export class MapComponent implements OnInit {
             bus_stops: []
       };
       private busStopSelected;
+      private ligneSelected;
 
-      private infoSelected: boolean;
+      private infoBusStopSelected: boolean;
+      private infoLigneSelected: boolean;
 
       //BusLines
       private busLines = {
             lines: []
       };
-      private busLineSelected;
+
 
       constructor(
             private busStopService: BusStopService,
@@ -34,7 +36,8 @@ export class MapComponent implements OnInit {
       ) { }
 
       ngOnInit() {
-            this.infoSelected = false;
+            this.infoBusStopSelected = false;
+            this.infoLigneSelected = false;
             this.setupMap();
             this.retrieveAllBusStops();
             this.retrieveAllBusLines();
@@ -46,14 +49,8 @@ export class MapComponent implements OnInit {
       }
 
       retrieveAllBusLines() {
-            this.busLineService.retrieveAll().subscribe((res: any) => {
-                  console.log(res);
-                  this.busLines = res;
-                  console.log(this.busLines);
-                  this.addBusLinesToMap();
-            }, err => {
-                  console.log(err);
-            })
+            this.busLines= this.busLineService.retrieveAll();
+            
       }
 
       setupMap() {
@@ -109,20 +106,26 @@ export class MapComponent implements OnInit {
                         }
                   })
 
-                  console.log(latlng);
 
                   var polyline = L.polyline(latlng, {color: 'red'}).addTo(this.mymap);
+                  polyline.on('click', this.onBusSelected.bind(this, line));
+
 
             })
       }
 
-      onBusStopSelected(busStop) {
-            this.infoSelected = true;
-            this.busStopSelected = busStop;
+      onBusSelected(line){
+            this.infoBusStopSelected = false;
+            this.infoLigneSelected = true;
+            this.ligneSelected = line;
+            console.log(line);
+
       }
 
-      onBusLineSelected() {
-
+      onBusStopSelected(busStop) {
+            this.infoBusStopSelected = true;
+            this.infoLigneSelected = false;
+            this.busStopSelected = busStop;
       }
 
       getRandomInt(max) {

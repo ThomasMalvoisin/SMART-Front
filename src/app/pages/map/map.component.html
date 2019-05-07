@@ -1,6 +1,6 @@
 <div class="row no-gutters hauteur">
       <div class="col-9" id="mymap"></div>
-      <div *ngIf="infoSelected" class="col-3 mx-auto h-100">
+      <div *ngIf="infoBusStopSelected" class="col-3 mx-auto h-100">
           <div class="card h-100" style="width: 18rem;" style="align-content: center;">
               <div class="card-body h-100">
                 <h5 style="text-align:center;" class="card-title">Informations</h5>
@@ -13,8 +13,23 @@
                     <li>{{busStopSelected?.nbPersonsComing}} personne(s) arrive(nt) à l'arrêt </li>
                   
                 </p>
-                <a href="details" style="background-color: #900090" class="mx-auto btn btn-primary" >Plus d'informations</a>
+                <a [routerLink]="['/details']" style="background-color: #900090" class="mx-auto btn btn-primary" >Plus d'informations</a>
               </div>
             </div>
       </div>
+      <div *ngIf="infoLigneSelected" class="col-3 mx-auto h-100">
+        <div class="card h-100" style="width: 18rem;" style="align-content: center;">
+            <div class="card-body h-100">
+              <h5 style="text-align:center;" class="card-title">Informations</h5>
+              <h3 style="text-align:center;" class="mx-auto">{{ ligneSelected.name}} </h3>
+              <p class="card-text">
+                  <li>Le nom du bus est "{{ligneSelected?.bus.name}}". </li>           
+                  <li>Il y a {{ligneSelected?.bus.nbPassengers}} passager(s) dans ce bus. </li>
+                  <li>Sa capacité est de {{ligneSelected?.bus.nbPlaces}} places.</li>         
+              </p>
+              <a [routerLink]="['/ligne']" style="background-color: #900090" class="mx-auto btn btn-primary" >Plus d'informations</a>
+            </div>
+          </div>
+    </div>
+
 </div>

@@ -19,7 +19,7 @@ export class DemoService {
       });
       var body = {
         simulation:{
-          nombre: nbRequete,
+          number: nbRequete,
           busStopRatio: []
           
         }

@@ -1,3 +1,34 @@
-<p>
-  details-lignes works!
-</p>
+<div>
+    <br/>
+    <div class="col-12" style="align-items: center;">
+    <div class="accordion" id="Detail">
+        <div *ngFor="let busLine of busLines.lines; let i = index">
+            <div class="card">
+                <div class="card-header" style="background-color: #900090">
+                  <h5 class="mb-0">
+                    <a class="btn"  data-toggle="collapse" href="#collapse{{i}}" role="button" aria-expanded="false" style="color:white">
+                        {{ busLine.name }}
+                    </a>
+                  </h5>
+                </div>
+            
+                <div id="collapse{{i}}" class="collapse" aria-labelledby="headingOne" data-parent="#Detail">
+                  <div class="card-body">
+                      <p>Le nom du bus est "{{busLine?.bus?.name}}". </p>           
+                      <p>Il y a {{busLine?.bus?.nbPassengers}} passager(s) dans ce bus. </p>
+                      <p>Sa capacité est de {{busLine?.bus?.nbPlaces}} places.</p>
+                      <p>Sa position de départ est {{busLine?.departure?.name}}.</p>
+                      <div *ngFor="let busStop of busLine.busStopLines; let j = index">
+                        <p>L'arret {{j+1}} est "{{busStop?.busStop?.name}}".          
+                        {{busStop?.nbGetOff}} personne(s) descend(ent) à cet arrêt.
+                        {{busStop?.nbGetOn}} personne(s) monte(nt) à cet arrêt. </p>
+                      </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+    
+    
+    </div>
+    </div>
+    </div>
