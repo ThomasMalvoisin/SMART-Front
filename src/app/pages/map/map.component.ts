@@ -58,16 +58,19 @@ export class MapComponent implements OnInit {
       addBusStopsToMap() {
             this.busStops.bus_stops.forEach(busStop => {
                   let circle = L.circle([busStop.latitude, busStop.longitude], {
-                        color: 'purple',
-                        fillColor: '#8B008B',
+                        color: '#700070',
+                        fillColor: '#700070',
                         fillOpacity: 0.2,
-                        radius: busStop.nbPersonsWaiting + 1
+                        radius: busStop.nbPersonsWaiting*2 + 1
                   });
 
                   // circle.bindPopup(busStop.name);
                   circle.on('click', this.onBusStopSelected.bind(this, busStop));
                   circle.addTo(this.mymap);
             });
+      //         var polyline = L.polyline(latlngs, {color: 'red'}).addTo(this.mymap);
+      // // zoom the map to the polyline
+      // this.mymap.fitBounds(polyline.getBounds());
       }
 
       addBusLinesToMap() {

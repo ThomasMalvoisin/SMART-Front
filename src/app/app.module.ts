@@ -11,8 +11,10 @@ import { MapComponent } from './pages/map/map.component';
 import { DetailsComponent } from './pages/details/details.component';
 import { ResourcesComponent } from './pages/resources/resources.component';
 import { DemoComponent } from './pages/demo/demo.component';
+import { DetailsLignesComponent } from './pages/details-lignes/details-lignes.component';
 
 import {FormsModule} from '@angular/Forms';
+
 @NgModule({
       declarations: [
             AppComponent,
@@ -20,7 +22,8 @@ import {FormsModule} from '@angular/Forms';
             MapComponent,
             DetailsComponent,
             ResourcesComponent,
-            DemoComponent
+            DemoComponent,
+            DetailsLignesComponent
       ],
       imports: [
             BrowserModule,

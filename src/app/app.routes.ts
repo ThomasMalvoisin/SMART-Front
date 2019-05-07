@@ -7,10 +7,16 @@ import {MapComponent} from './pages/map/map.component';
 import {DemoComponent} from './pages/demo/demo.component';
 import {DetailsComponent} from './pages/details/details.component';
 import {ResourcesComponent} from './pages/resources/resources.component';
+import {DetailsLignesComponent} from './pages/details-lignes/details-lignes.component';
+
 
 
 
 export const ROUTES: Routes = [
+      {
+            component: DetailsLignesComponent,
+            path: 'ligne'
+      },
       {
             component: DashboardComponent,
             path: 'dashboard'
