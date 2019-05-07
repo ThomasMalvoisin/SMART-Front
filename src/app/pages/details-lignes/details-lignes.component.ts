@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { BusLineService } from 'src/app/services/bus-line.service';
 
 @Component({
   selector: 'app-details-lignes',
@@ -7,9 +8,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DetailsLignesComponent implements OnInit {
 
-  constructor() { }
+  private busLines: [];
+
+  constructor(private busLineService: BusLineService) { }
 
   ngOnInit() {
+    this.retrieveAllBusLines();
+  }
+
+  retrieveAllBusLines() {
+    this.busLines=this.busLineService.retrieveAll();
+    console.log(this.busLines);
   }
 
 }
