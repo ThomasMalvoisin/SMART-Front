@@ -7,6 +7,11 @@ import { environment } from 'src/environments/environment';
 })
 export class BusLineService {
 
+      private data = {
+            lines: [],
+            bus_stops: []
+          };
+
       constructor(private http: HttpClient) { }
 
       retrieveAll() {
@@ -34,6 +39,24 @@ export class BusLineService {
             //       ]
             // }
 
+      }
+
+      retrieveAllData(recall, callback){
+            if(!recall && this.data.bus_stops.length){
+                  callback(this.data);
+            } else {
+                  const options = {
+                        params: new HttpParams().set("action", "postBusProgress")
+                  };
+      
+                  console.log("call");
+                  this.http.post(environment.backend + "/OptiBus_Back/ActionServlet", {}, options).subscribe((res: any) => {
+                        this.data = res;
+                        callback(this.data);
+                  }, err => {
+                        console.log(err);
+                  });
+            }
       }
 
       

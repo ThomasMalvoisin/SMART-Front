@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import * as L from 'leaflet';
 import { BusStopService } from 'src/app/services/bus-stop.service';
 import { BusLineService } from 'src/app/services/bus-line.service';
@@ -10,26 +10,26 @@ import { BusLineService } from 'src/app/services/bus-line.service';
       templateUrl: './map.component.html',
       styleUrls: ['./map.component.scss']
 })
-export class MapComponent implements OnInit {
+export class MapComponent implements OnInit, OnDestroy {
       //Map
       private mymap;
 
       //BusStops
-      private busStops = {
-            bus_stops: []
-      };
+      private busStops = [];
       private busStopSelected;
-      private ligneSelected;
-
       private infoBusStopSelected: boolean;
-      private infoLigneSelected: boolean;
+      private circles = [];
+      
 
       //BusLines
-      private busLines = {
-            lines: []
-      };
+      private busLines = []
+      private ligneSelected;
+      private infoLigneSelected: boolean;
+      private polylines = [];
+      private oldPolylines = [];
 
       private recall = false;
+      private interval;
 
       constructor(
             private busStopService: BusStopService,
@@ -40,42 +40,82 @@ export class MapComponent implements OnInit {
             this.infoBusStopSelected = false;
             this.infoLigneSelected = false;
             this.setupMap();
-            this.retrieveAllBusStops();
+            // this.retrieveAllBusStops();
             // this.retrieveAllBusLines();
+            this.retrieveAllData();
+            this.interval = setInterval(this.retrieveAllData.bind(this), 10000);
+      }
+
+      ngOnDestroy(){
+            clearInterval(this.interval);
       }
 
       retrieveAllBusStops() {
-            this.busStopService.getData(this.recall, function (res) {
+            // this.busStopService.getData(this.recall, function (res) {
+            //       console.log(res);
+            //       if (this.busStops.bus_stops.length) {
+            //             this.busStops.bus_stops.forEach((busStop, index) => {
+            //                   if (busStop.busStopId == res.bus_stops[index].busStopId) {
+            //                         if (this.busStops.bus_stops[index].nbPersonsWaiting != res.bus_stops[index].nbPersonsWaiting){
+            //                               this.busStops.bus_stops[index].nbPersonsWaiting = res.bus_stops[index].nbPersonsWaiting
+            //                               //TODO update circle size
+            //                         }
+                                          
+            //                         if (this.busStops.bus_stops[index].nbPersonsComing != res.bus_stops[index].nbPersonsComing){
+            //                               this.busStops.bus_stops[index].nbPersonsComing = res.bus_stops[index].nbPersonsComing
+            //                               //TODO update circle size
+            //                         }
+                                          
+            //                   }
+            //             });
+            //       } else {
+            //             this.busStops = res;
+            //             this.addBusStopsToMap();
+            //       }
+
+            // }.bind(this));
+            // if (this.recall == false) {
+            //       this.recall = true;
+            // }
+      }
+
+      retrieveAllBusLines() {
+            // this.busLines= this.busLineService.retrieveAll();
+
+      }
+
+      retrieveAllData(){
+            this.busLineService.retrieveAllData(this.recall, function (res) {
                   console.log(res);
-                  if (this.busStops.bus_stops.length) {
-                        this.busStops.bus_stops.forEach((busStop, index) => {
+                  if (this.busStops.length) {
+                        this.busStops.forEach((busStop, index) => {
                               if (busStop.busStopId == res.bus_stops[index].busStopId) {
-                                    if (this.busStops.bus_stops[index].nbPersonsWaiting != res.bus_stops[index].nbPersonsWaiting){
-                                          this.busStops.bus_stops[index].nbPersonsWaiting = res.bus_stops[index].nbPersonsWaiting
+                                    if (this.busStops[index].nbPersonsWaiting != res.bus_stops[index].nbPersonsWaiting){
+                                          this.busStops[index].nbPersonsWaiting = res.bus_stops[index].nbPersonsWaiting
                                           //TODO update circle size
                                     }
                                           
-                                    if (this.busStops.bus_stops[index].nbPersonsComing != res.bus_stops[index].nbPersonsComing){
-                                          this.busStops.bus_stops[index].nbPersonsComing = res.bus_stops[index].nbPersonsComing
+                                    if (this.busStops[index].nbPersonsComing != res.bus_stops[index].nbPersonsComing){
+                                          this.busStops[index].nbPersonsComing = res.bus_stops[index].nbPersonsComing
                                           //TODO update circle size
                                     }
                                           
                               }
                         });
                   } else {
-                        this.busStops = res;
+                        this.busStops = res.bus_stops;
                         this.addBusStopsToMap();
                   }
+
+                  this.oldPolylines = this.polylines;
+                  this.busLines = res.lines;
+                  this.addBusLinesToMap();
+                  // this.removeOldBusLines();
 
             }.bind(this));
             if (this.recall == false) {
                   this.recall = true;
             }
-      }
-
-      retrieveAllBusLines() {
-            // this.busLines= this.busLineService.retrieveAll();
-
       }
 
       setupMap() {
@@ -86,7 +126,7 @@ export class MapComponent implements OnInit {
       }
 
       addBusStopsToMap() {
-            this.busStops.bus_stops.forEach(busStop => {
+            this.busStops.forEach(busStop => {
                   let circle = L.circle([busStop.latitude, busStop.longitude], {
                         color: '#700070',
                         fillColor: '#700070',
@@ -101,9 +141,8 @@ export class MapComponent implements OnInit {
       }
 
       addBusLinesToMap() {
-            this.busLines.lines.forEach(line => {
+            this.busLines.forEach(line => {
                   let latlng = [[]];
-
 
                   latlng[0].push([line.departure.latitude, line.departure.longitude]);
 
@@ -128,9 +167,15 @@ export class MapComponent implements OnInit {
                         }
                   })
 
-
                   var polyline = L.polyline(latlng, { color: 'red' }).addTo(this.mymap);
+                  this.polylines.push(polyline);
                   polyline.on('click', this.onBusSelected.bind(this, line));
+            })
+      }
+
+      removeOldBusLines(){
+            this.oldPolylines.forEach(polyline => {
+                  polyline.remove();
             })
       }
 
