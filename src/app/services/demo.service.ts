@@ -37,10 +37,8 @@ export class DemoService {
                   params: new HttpParams().set("action", "startSimulation")
             };
 
-            this.http.post(environment.backend + "/OptiBus_Back/ActionServlet", body, options);
             console.log(JSON.stringify(body));
-
-
+            return this.http.post(environment.backend + "/OptiBus_Back/ActionServlet", body, options);
       }
 
 
@@ -70,5 +68,13 @@ export class DemoService {
             console.log(body);
             this.http.post(environment.backend + "/OptiBus_Back/ActionServlet", body, options);
 
+      }
+
+      stopDemo(){
+            const options = {
+                  params: new HttpParams().set("action", "stopSimulation")
+            };
+
+            return this.http.get(environment.backend + "/OptiBus_Back/ActionServlet", options);
       }
 }

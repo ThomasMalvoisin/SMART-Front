@@ -50,14 +50,19 @@ export class DemoComponent implements OnInit {
       }
 
       sendDemo() {
-            console.log("suuu");
-            // this.demoService.sendToBack(this.nbRequete, this.busStopsPercents);
+            // console.log("suuu");
+            this.demoService.sendToBack(this.nbRequete, this.busStopsPercents).subscribe(res => {
+                  console.log(res);
+            }, err => {
+                  console.log(err);
+            });
       }
 
-
-
-
-
-
-
+      stopDemo(){
+            this.demoService.stopDemo().subscribe(res => {
+                  console.log(res);
+            }, err => {
+                  console.log(err);
+            });
+      }
 }
