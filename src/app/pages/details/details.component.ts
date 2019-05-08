@@ -27,8 +27,8 @@ export class DetailsComponent implements OnInit, OnDestroy {
 
       ngOnInit() {
             // setInterval(this.retrieveAllBusStops.bind(this), 5000);
-            const text: string = this.route.snapshot.params['id']
-            console.log(text);
+            // const text: string = this.route.snapshot.params['id']
+            // console.log(text);
             this.retrieveAllData();
             this.interval = setInterval(this.retrieveAllData.bind(this), 10000);
       }

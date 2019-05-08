@@ -77,4 +77,12 @@ export class DemoService {
 
             return this.http.get(environment.backend + "/OptiBus_Back/ActionServlet", options);
       }
+
+      reinitialiser(){
+
+            const options = {
+                  params: new HttpParams().set("action", "*********")
+            };
+            this.http.get(environment.backend + "/OptiBus_Back/ActionServlet", options);
+      }
 }

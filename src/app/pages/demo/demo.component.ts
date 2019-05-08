@@ -65,4 +65,8 @@ export class DemoComponent implements OnInit {
                   console.log(err);
             });
       }
+
+      reinitialiserDemo(){
+            this.demoService.reinitialiser();
+      }
 }
