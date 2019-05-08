@@ -24,9 +24,6 @@ export class DemoComponent implements OnInit {
             // this.retrieveAllBusStops();
             this.retrieveAllData();
             this.createUtilsArrays();
-            var element = document.getElementById('buttonActualiser');
-
-            element.addEventListener('click', this.sendDemo.bind(this));
       }
 
       // retrieveAllBusStops() {

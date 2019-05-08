@@ -1,0 +1,52 @@
+<div class="row no-gutters">
+  <div class="offset-1 col-5" style="text-align: center;">
+        <br />
+        <h5>Paramètre de lancement maximal de l'algorithme</h5>
+        <br />
+        <form action="">
+              <div class="form-group row">
+                    <label for="nombreRequete" class="col-5">
+                          Nombre de requêtes :&nbsp;
+                    </label>
+                    <input type="number" name="requete" [(ngModel)]="nbRequeteMax"
+                          class="form-control col-5" />
+                </div>
+                <div class="form-group row">
+                    <label for="nombreRequete" class="col-5">
+                          Temps (en minutes) :&nbsp;
+                    </label>
+                    <input type="number" name="temps" [(ngModel)]="tempsMax"
+                          class="form-control col-5"/>
+              </div>
+        </form>
+        <button id="AppliquerParam"  style="background-color: #700070" class="col-6 mx-auto btn btn-primary btn-lg btn-block">
+              Appliquer les Paramètres
+        </button>
+    </div>
+    <div class="offset-1 col-5" style="text-align: center;">
+      <br />
+      <h5>Ajouter un bus</h5>
+      <br />
+      <form action="">
+            <div class="form-group row">
+                  <label for="nombreRequete" class="col-4">
+                        Nom du bus :&nbsp;
+                  </label>
+                  <input type="string" name="nom" [(ngModel)]="nomBus"
+                        class="form-control col-5" />
+                  </div>
+                  <div class="form-group row">
+                  <label for="nombreRequete" class="col-4">
+                        Nombre de place:&nbsp;
+                  </label>
+                  <input type="number" name="nombre" [(ngModel)]="placeBus"
+                        class="form-control col-5"/>
+            </div>
+      </form>
+      <button id="AjouterBus"  style="background-color: #700070" class="col-6 mx-auto btn btn-primary btn-lg btn-block">
+            Ajouter le bus
+      </button>
+
+
+        
+  </div>

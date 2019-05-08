@@ -1,6 +1,7 @@
 import { Component, OnInit, Inject, Renderer2, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import { BusStopService } from 'src/app/services/bus-stop.service';
 import { BusLineService } from 'src/app/services/bus-line.service';
+import { ActivatedRoute } from '@angular/router';
 // import { concat } from 'rxjs';
 // import { DOCUMENT } from '@angular/common';
 
@@ -16,15 +17,18 @@ export class DetailsComponent implements OnInit, OnDestroy {
 
       private recall = false;
       private interval;
-      // @ViewChild('one') d1:ElementRef;
+
 
       constructor(
             private busStopService: BusStopService,
-            private busLineService : BusLineService
+            private busLineService : BusLineService,
+            private route: ActivatedRoute
       ) { }
 
       ngOnInit() {
             // setInterval(this.retrieveAllBusStops.bind(this), 5000);
+            const text: string = this.route.snapshot.params['id']
+            console.log(text);
             this.retrieveAllData();
             this.interval = setInterval(this.retrieveAllData.bind(this), 10000);
       }

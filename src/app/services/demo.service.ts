@@ -33,9 +33,42 @@ export class DemoService {
                   body.simulation.busStopRatio.push(busStopRatio);
             });
 
-            this.http.post(environment.backend + "/OptiBus_Back/ActionServlet", body);
+            const options = {
+                  params: new HttpParams().set("action", "startSimulation")
+            };
+
+            this.http.post(environment.backend + "/OptiBus_Back/ActionServlet", body, options);
             console.log(JSON.stringify(body));
 
+
+      }
+
+
+      sendNewBus(nomBus: String,placeBus:number){ // Attention body a changer
+            const options = {
+                  params: new HttpParams().set("action", "createBus")
+            };
+            var body = {
+                  nom: nomBus,
+                  place: placeBus
+                  }
+            console.log("demo.service: this.sendNewBus()");
+            console.log(body);
+            this.http.post(environment.backend + "/OptiBus_Back/ActionServlet", body, options);
+
+      }
+
+      sendParamAlgo(nbRequeteMax: number , tempsMax: number){ // Attention body et action a changer
+            const options = {
+                  params: new HttpParams().set("action", "********")
+            };
+            var body = {
+                  requete: nbRequeteMax,
+                  temps: tempsMax
+                  }
+            console.log("demo.service: this.sendParamAlgo()");
+            console.log(body);
+            this.http.post(environment.backend + "/OptiBus_Back/ActionServlet", body, options);
 
       }
 }

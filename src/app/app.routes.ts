@@ -6,7 +6,7 @@ import {DashboardComponent} from './pages/dashboard/dashboard.component';
 import {MapComponent} from './pages/map/map.component';
 import {DemoComponent} from './pages/demo/demo.component';
 import {DetailsComponent} from './pages/details/details.component';
-import {ResourcesComponent} from './pages/resources/resources.component';
+import {ParametresComponent} from './pages/parametres/parametres.component';
 import {DetailsLignesComponent} from './pages/details-lignes/details-lignes.component';
 
 
@@ -30,12 +30,12 @@ export const ROUTES: Routes = [
             path: 'demo'
       },
       {
-            component: ResourcesComponent,
-            path: 'resources'
+            component: ParametresComponent,
+            path: 'parametres'
       },
       {
             component: DetailsComponent,
-            path: 'details'
+            path: 'details/:id'
       },
       {
             path: '',

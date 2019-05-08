@@ -9,11 +9,11 @@ import { AppComponent } from './app.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { MapComponent } from './pages/map/map.component';
 import { DetailsComponent } from './pages/details/details.component';
-import { ResourcesComponent } from './pages/resources/resources.component';
 import { DemoComponent } from './pages/demo/demo.component';
 import { DetailsLignesComponent } from './pages/details-lignes/details-lignes.component';
 
 import {FormsModule} from '@angular/Forms';
+import { ParametresComponent } from './pages/parametres/parametres.component';
 
 @NgModule({
       declarations: [
@@ -21,9 +21,10 @@ import {FormsModule} from '@angular/Forms';
             DashboardComponent,
             MapComponent,
             DetailsComponent,
-            ResourcesComponent,
+            ParametresComponent,
             DemoComponent,
-            DetailsLignesComponent
+            DetailsLignesComponent,
+            ParametresComponent
       ],
       imports: [
             BrowserModule,

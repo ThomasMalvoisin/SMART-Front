@@ -10,15 +10,28 @@ export class DetailsLignesComponent implements OnInit {
 
   private busLines: [];
 
+  private recall = false;
+  private interval;
+
   constructor(private busLineService: BusLineService) { }
 
   ngOnInit() {
-    this.retrieveAllBusLines();
+    this.retrieveAllData();
+    this.interval = setInterval(this.retrieveAllData.bind(this), 10000);
   }
 
-  retrieveAllBusLines() {
-//     this.busLines=this.busLineService.retrieveAll();
-    console.log(this.busLines);
-  }
+  ngOnDestroy(){
+    clearInterval(this.interval);
+}
+
+  retrieveAllData(){
+    this.busLineService.retrieveAllData(this.recall, function (res) {
+          console.log(res.lines)
+          this.busLines = res.lines;
+    }.bind(this));
+    if (this.recall == false) {
+          this.recall = true;
+    }
+}
 
 }

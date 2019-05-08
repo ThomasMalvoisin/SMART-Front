@@ -19,14 +19,13 @@ export class MapComponent implements OnInit, OnDestroy {
       private busStopSelected;
       private infoBusStopSelected: boolean;
       private circles = [];
-      
+
 
       //BusLines
       private busLines = []
       private ligneSelected;
       private infoLigneSelected: boolean;
       private polylines = [];
-      private oldPolylines = [];
 
       private recall = false;
       private interval;
@@ -50,40 +49,6 @@ export class MapComponent implements OnInit, OnDestroy {
             clearInterval(this.interval);
       }
 
-      retrieveAllBusStops() {
-            // this.busStopService.getData(this.recall, function (res) {
-            //       console.log(res);
-            //       if (this.busStops.bus_stops.length) {
-            //             this.busStops.bus_stops.forEach((busStop, index) => {
-            //                   if (busStop.busStopId == res.bus_stops[index].busStopId) {
-            //                         if (this.busStops.bus_stops[index].nbPersonsWaiting != res.bus_stops[index].nbPersonsWaiting){
-            //                               this.busStops.bus_stops[index].nbPersonsWaiting = res.bus_stops[index].nbPersonsWaiting
-            //                               //TODO update circle size
-            //                         }
-                                          
-            //                         if (this.busStops.bus_stops[index].nbPersonsComing != res.bus_stops[index].nbPersonsComing){
-            //                               this.busStops.bus_stops[index].nbPersonsComing = res.bus_stops[index].nbPersonsComing
-            //                               //TODO update circle size
-            //                         }
-                                          
-            //                   }
-            //             });
-            //       } else {
-            //             this.busStops = res;
-            //             this.addBusStopsToMap();
-            //       }
-
-            // }.bind(this));
-            // if (this.recall == false) {
-            //       this.recall = true;
-            // }
-      }
-
-      retrieveAllBusLines() {
-            // this.busLines= this.busLineService.retrieveAll();
-
-      }
-
       retrieveAllData(){
             this.busLineService.retrieveAllData(this.recall, function (res) {
                   console.log(res);
@@ -91,8 +56,11 @@ export class MapComponent implements OnInit, OnDestroy {
                         this.busStops.forEach((busStop, index) => {
                               if (busStop.busStopId == res.bus_stops[index].busStopId) {
                                     if (this.busStops[index].nbPersonsWaiting != res.bus_stops[index].nbPersonsWaiting){
-                                          this.busStops[index].nbPersonsWaiting = res.bus_stops[index].nbPersonsWaiting
-                                          //TODO update circle size
+                                          this.busStops[index].nbPersonsWaiting = res.bus_stops[index].nbPersonsWaiting;
+                                          this.circles[index].setRadius(res.bus_stops[index].nbPersonsWaiting*2 +1 );
+                                          console.log("map: update circle size");
+                                          console.log(res.bus_stops[index].nbPersonsWaiting*2 +1 );
+                                          console.log(busStop.name);
                                     }
                                           
                                     if (this.busStops[index].nbPersonsComing != res.bus_stops[index].nbPersonsComing){
@@ -107,10 +75,10 @@ export class MapComponent implements OnInit, OnDestroy {
                         this.addBusStopsToMap();
                   }
 
-                  this.oldPolylines = this.polylines;
+                  this.removeBusLines();
                   this.busLines = res.lines;
                   this.addBusLinesToMap();
-                  // this.removeOldBusLines();
+      
 
             }.bind(this));
             if (this.recall == false) {
@@ -126,22 +94,21 @@ export class MapComponent implements OnInit, OnDestroy {
       }
 
       addBusStopsToMap() {
-            this.busStops.forEach(busStop => {
+            this.busStops.forEach((busStop, index) => {
                   let circle = L.circle([busStop.latitude, busStop.longitude], {
                         color: '#700070',
                         fillColor: '#700070',
                         fillOpacity: 0.2,
                         radius: busStop.nbPersonsWaiting * 2 + 1
                   });
-
-                  // circle.bindPopup(busStop.name);
-                  circle.on('click', this.onBusStopSelected.bind(this, busStop));
-                  circle.addTo(this.mymap);
+                  this.circles.push(circle);
+                  this.circles[index].on('click', this.onBusStopSelected.bind(this, busStop));
+                  this.circles[index].addTo(this.mymap);
             });
       }
 
       addBusLinesToMap() {
-            this.busLines.forEach(line => {
+            this.busLines.forEach((line, index) => {
                   let latlng = [[]];
 
                   latlng[0].push([line.departure.latitude, line.departure.longitude]);
@@ -167,14 +134,18 @@ export class MapComponent implements OnInit, OnDestroy {
                         }
                   })
 
-                  var polyline = L.polyline(latlng, { color: 'red' }).addTo(this.mymap);
+                  let nb = 3;
+
+                  let color = "hsl(" + index*52 + ",83.9%,26.9%)";
+                  
+                  var polyline = L.polyline(latlng, { color: color }).addTo(this.mymap);
                   this.polylines.push(polyline);
-                  polyline.on('click', this.onBusSelected.bind(this, line));
+                  this.polylines[index].on('click', this.onBusSelected.bind(this, line));
             })
       }
 
-      removeOldBusLines(){
-            this.oldPolylines.forEach(polyline => {
+      removeBusLines(){
+            this.polylines.forEach(polyline => {
                   polyline.remove();
             })
       }
