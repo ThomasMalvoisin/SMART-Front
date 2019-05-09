@@ -42,35 +42,37 @@ export class DemoService {
       }
 
 
-      sendNewBus(nomBus: String,placeBus:number){ // Attention body a changer
+      sendNewBus(nomBus: String, placeBus: number) { // Attention body a changer
             const options = {
                   params: new HttpParams().set("action", "createBus")
             };
             var body = {
-                  nom: nomBus,
-                  place: placeBus
+                  bus: {
+                        name: nomBus,
+                        nbPlaces: placeBus
                   }
+            }
             console.log("demo.service: this.sendNewBus()");
             console.log(body);
-            this.http.post(environment.backend + "/OptiBus_Back/ActionServlet", body, options);
+            return this.http.post(environment.backend + "/OptiBus_Back/ActionServlet", body, options);
 
       }
 
-      sendParamAlgo(nbRequeteMax: number , tempsMax: number){ // Attention body et action a changer
+      sendParamAlgo(nbRequeteMax: number, tempsMax: number) { // Attention body et action a changer
             const options = {
                   params: new HttpParams().set("action", "********")
             };
             var body = {
                   requete: nbRequeteMax,
                   temps: tempsMax
-                  }
+            }
             console.log("demo.service: this.sendParamAlgo()");
             console.log(body);
             this.http.post(environment.backend + "/OptiBus_Back/ActionServlet", body, options);
 
       }
 
-      stopDemo(){
+      stopDemo() {
             const options = {
                   params: new HttpParams().set("action", "stopSimulation")
             };
@@ -78,11 +80,12 @@ export class DemoService {
             return this.http.get(environment.backend + "/OptiBus_Back/ActionServlet", options);
       }
 
-      reinitialiser(){
+      reinitialiser() {
 
             const options = {
-                  params: new HttpParams().set("action", "*********")
+                  params: new HttpParams().set("action", "initDBValues")
             };
-            this.http.get(environment.backend + "/OptiBus_Back/ActionServlet", options);
+
+            return this.http.get(environment.backend + "/OptiBus_Back/ActionServlet", options);
       }
 }

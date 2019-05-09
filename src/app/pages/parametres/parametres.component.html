@@ -19,7 +19,7 @@
                           class="form-control col-5"/>
               </div>
         </form>
-        <button id="AppliquerParam"  style="background-color: #700070" class="col-6 mx-auto btn btn-primary btn-lg btn-block">
+        <button id="AppliquerParam"  (click)="sendParamAlgo()" style="background-color: #700070" class="col-6 mx-auto btn btn-primary btn-lg btn-block">
               Appliquer les Paramètres
         </button>
     </div>
@@ -43,7 +43,7 @@
                         class="form-control col-5"/>
             </div>
       </form>
-      <button id="AjouterBus"  style="background-color: #700070" class="col-6 mx-auto btn btn-primary btn-lg btn-block">
+      <button id="AjouterBus" (click)="sendNewBus()" style="background-color: #700070" class="col-6 mx-auto btn btn-primary btn-lg btn-block">
             Ajouter le bus
       </button>
 

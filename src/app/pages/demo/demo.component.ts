@@ -67,6 +67,10 @@ export class DemoComponent implements OnInit {
       }
 
       reinitialiserDemo(){
-            this.demoService.reinitialiser();
+            this.demoService.reinitialiser().subscribe(res => {
+                  console.log(res);
+            }, err => {
+                  console.log(err);
+            });
       }
 }
